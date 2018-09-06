@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tasks>
+	<task>
+		<!-- 建表 -->
+		<createTable tableName="">
+			<column columnName="" columnType="" />
+		</createTable>
+		<!-- 删表 -->
+		<dropTable tableName="" />
+		<!-- 添加列 -->
+		<addColumn tableName="" columnName="" columnType="" />
+		<!-- 修改列类型 -->
+		<alterType tableName="" columnName="" columnType="" />
+		<!-- 重命名列名 -->
+		<renameColumn tableName="" columnName="" rename="" />
+		<!-- 插入数据 -->
+		<insert tableName="">
+			<colum name="" value="" />
+			<colum name="" value="" />
+			<colum name="" value="" />
+		</insert>
+		<!-- 更新数据 -->
+		<update tableName="" where="">
+			<colum name="" value="" />
+			<colum name="" value="" />
+		</update>
+		<!-- 删除数据 -->
+		<delete tableName="" where="" />
+	</task>
+</tasks>
