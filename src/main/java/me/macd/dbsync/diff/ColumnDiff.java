@@ -11,12 +11,12 @@ import me.macd.dbsync.Column;
 @FunctionalInterface
 public interface ColumnDiff {
 
-	/**
-	 * 列比较
-	 * 
-	 * @param c1
-	 * @param c2
-	 * @return
-	 */
-	boolean diff(Column c1, Column c2);
+    /**
+     * 列比较
+     * 
+     * @param c1
+     * @param c2
+     * @return
+     */
+    boolean diff(Column c1, Column c2);
 }

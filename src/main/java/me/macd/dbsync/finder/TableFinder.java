@@ -18,24 +18,24 @@ import me.macd.dbsync.finder.impl.OracleTableFinder;
  */
 public interface TableFinder {
 
-	/**
-	 * 查询指定数据库的所有表字段
-	 * 
-	 * @param conn
-	 * @return map&lt;tablename,map&lt;columnname,column&gt;&gt;
-	 * @throws SQLException
-	 */
-	Map<String, Map<String, Column>> findTable(Connection conn) throws SQLException;
+    /**
+     * 查询指定数据库的所有表字段
+     * 
+     * @param conn
+     * @return map&lt;tablename,map&lt;columnname,column&gt;&gt;
+     * @throws SQLException
+     */
+    Map<String, Map<String, Column>> findTable(Connection conn) throws SQLException;
 
-	public static class TableFinderFactory {
-		public static TableFinder getTableFinder(DBType dbType) {
-			if (dbType.equals(DBType.oracle)) {
-				return new OracleTableFinder();
-			} else if (dbType.equals(DBType.mysql)) {
-				return new MysqlTableFinder();
-			} else {
-				return new DefaultTableFinder();
-			}
-		}
-	}
+    public static class TableFinderFactory {
+        public static TableFinder getTableFinder(DBType dbType) {
+            if (dbType.equals(DBType.oracle)) {
+                return new OracleTableFinder();
+            } else if (dbType.equals(DBType.mysql)) {
+                return new MysqlTableFinder();
+            } else {
+                return new DefaultTableFinder();
+            }
+        }
+    }
 }

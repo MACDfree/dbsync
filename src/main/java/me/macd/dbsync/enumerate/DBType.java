@@ -1,15 +1,15 @@
 package me.macd.dbsync.enumerate;
 
 public enum DBType {
-	mysql("mysql"), oracle("oracle"), mssql("mssql");
+    mysql("mysql"), oracle("oracle"), mssql("mssql");
 
-	String val;
+    String val;
 
-	DBType(String val) {
-		this.val = val;
-	}
+    DBType(String val) {
+        this.val = val;
+    }
 
-	public String val() {
-		return this.val;
-	}
+    public String val() {
+        return this.val;
+    }
 }

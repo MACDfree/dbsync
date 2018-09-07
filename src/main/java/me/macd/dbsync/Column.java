@@ -10,83 +10,83 @@ import java.util.Map;
  *
  */
 public class Column {
-	private String tableName;
-	private String name;
-	private String type;
-	// 字段长度
-	private Integer size;
-	// 字段精度
-	private Integer digits;
-	private Map<String, Object> extInfo = new LinkedHashMap<>();
+    private String tableName;
+    private String name;
+    private String type;
+    // 字段长度
+    private Integer size;
+    // 字段精度
+    private Integer digits;
+    private Map<String, Object> extInfo = new LinkedHashMap<>();
 
-	public Column(String tableName, String name, String type, Integer size, Integer digits) {
-		super();
-		this.tableName = tableName;
-		this.name = name;
-		this.type = type;
-		this.size = size;
-		this.digits = digits;
-	}
+    public Column(String tableName, String name, String type, Integer size, Integer digits) {
+        super();
+        this.tableName = tableName;
+        this.name = name;
+        this.type = type;
+        this.size = size;
+        this.digits = digits;
+    }
 
-	public Column(String tableName, String name, String type) {
-		this(tableName, name, type, null, null);
-	}
+    public Column(String tableName, String name, String type) {
+        this(tableName, name, type, null, null);
+    }
 
-	public String getTableName() {
-		return tableName;
-	}
+    public String getTableName() {
+        return tableName;
+    }
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public Integer getSize() {
-		return size;
-	}
+    public Integer getSize() {
+        return size;
+    }
 
-	public void setSize(Integer size) {
-		this.size = size;
-	}
+    public void setSize(Integer size) {
+        this.size = size;
+    }
 
-	public Map<String, Object> getExtInfo() {
-		return extInfo;
-	}
+    public Map<String, Object> getExtInfo() {
+        return extInfo;
+    }
 
-	public Object putExtInfo(String key, Object val) {
-		return this.extInfo.put(key, val);
-	}
+    public Object putExtInfo(String key, Object val) {
+        return this.extInfo.put(key, val);
+    }
 
-	public Object getExtInfo(String key) {
-		return this.extInfo.get(key);
-	}
+    public Object getExtInfo(String key) {
+        return this.extInfo.get(key);
+    }
 
-	public Integer getDigits() {
-		return digits;
-	}
+    public Integer getDigits() {
+        return digits;
+    }
 
-	public void setDigits(Integer digits) {
-		this.digits = digits;
-	}
+    public void setDigits(Integer digits) {
+        this.digits = digits;
+    }
 
-	@Override
-	public String toString() {
-		return String.format("{tablename:%s,name:%s,type:%s,size:%s,digits:%s}", this.tableName, this.name, this.type,
-				this.size, this.digits);
-	}
+    @Override
+    public String toString() {
+        return String.format("{tablename:%s,name:%s,type:%s,size:%s,digits:%s}", this.tableName, this.name, this.type,
+                this.size, this.digits);
+    }
 }
