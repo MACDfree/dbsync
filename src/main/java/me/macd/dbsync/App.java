@@ -17,8 +17,8 @@ public class App {
     }
 
     public static void main(String[] args) {
-        TableStructCompare.compare("jdbc:mysql://192.168.211.135:3306/epointbid_sc_qy", "root", "123456",
-                "jdbc:sqlserver://192.168.200.129\\sql2008_demo;databaseName=EpointBid_SC_BS", "sa", "Epoint@demo");
+        TableStructCompare.compare("jdbc:mysql://192.168.111.111:3306/test", "root", "123456",
+                "jdbc:sqlserver://192.168.111.111\\sql2008_demo;databaseName=test", "sa", "xxx");
         int count = 0;
         for (String key : Context.diffColums.keySet()) {
             for (Column[] cols : Context.diffColums.get(key)) {
