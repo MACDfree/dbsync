@@ -1,6 +1,6 @@
 package me.macd.dbsync.diff;
 
-import me.macd.dbsync.Column;
+import me.macd.dbsync.domain.Column;
 
 /**
  * 列比较抽象接口

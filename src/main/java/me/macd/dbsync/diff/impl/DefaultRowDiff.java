@@ -11,6 +11,7 @@ public class DefaultRowDiff implements RowDiff {
     public boolean diff(CompareTable table, Map<String, Object> r1, Map<String, Object> r2) {
         for (String columnName : table.getCompareColumns()) {
             if (r1.get(columnName) == null && r2.get(columnName) == null) {
+                // 如果两个都是null，认为是相等的
                 continue;
             } else if (r1.get(columnName) == null && r2.get(columnName) != null) {
                 return true;
@@ -21,5 +22,4 @@ public class DefaultRowDiff implements RowDiff {
 
         return false;
     }
-
 }

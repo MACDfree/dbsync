@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import me.macd.dbsync.Column;
+import me.macd.dbsync.domain.Column;
 import me.macd.dbsync.finder.TableFinder;
 
 public class OracleTableFinder implements TableFinder {

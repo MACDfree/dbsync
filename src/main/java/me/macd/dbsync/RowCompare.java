@@ -44,6 +44,7 @@ public class RowCompare {
                             keys[i] = rs.getString(ct.getKeys()[i]);
                         }
 
+                        // 注意是从1开始的
                         for (int i = 1; i <= columnCount; i++) {
                             row.put(rs.getMetaData().getColumnLabel(i).toLowerCase(), rs.getObject(i));
                         }
@@ -65,6 +66,7 @@ public class RowCompare {
                             keys[i] = rs.getString(ct.getKeys()[i]);
                         }
 
+                        // 注意是从1开始的
                         for (int i = 1; i <= columnCount; i++) {
                             row.put(rs.getMetaData().getColumnLabel(i).toLowerCase(), rs.getObject(i));
                         }
@@ -96,7 +98,7 @@ public class RowCompare {
             result.removeAll(desSet);
             for (Key key : result) {
                 Map<String, Object> row = srcMap.get(ct).get(key);
-                Context.onlySrcRows.add(new Row(ct.getTableName(), row));
+                Context.onlyLeftRows.add(new Row(ct.getTableName(), row));
             }
 
             // 只在目标库中存在的数据
@@ -105,7 +107,7 @@ public class RowCompare {
             result.removeAll(srcSet);
             for (Key key : result) {
                 Map<String, Object> row = desMap.get(ct).get(key);
-                Context.onlyDesRows.add(new Row(ct.getTableName(), row));
+                Context.onlyRightRows.add(new Row(ct.getTableName(), row));
             }
 
             // 差异数据

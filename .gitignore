@@ -3,3 +3,7 @@
 .classpath
 target
 .project
+
+# idea
+.idea
+*.iml

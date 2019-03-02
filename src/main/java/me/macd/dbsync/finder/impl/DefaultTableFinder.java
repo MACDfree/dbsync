@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import me.macd.dbsync.Column;
+import me.macd.dbsync.domain.Column;
 import me.macd.dbsync.finder.TableFinder;
 
 public class DefaultTableFinder implements TableFinder {

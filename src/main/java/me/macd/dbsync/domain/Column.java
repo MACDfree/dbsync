@@ -1,4 +1,4 @@
-package me.macd.dbsync;
+package me.macd.dbsync.domain;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -10,8 +10,11 @@ import java.util.Map;
  *
  */
 public class Column {
+    // 表名
     private String tableName;
+    // 字段名称
     private String name;
+    // 字段类型（原始数据库中的类型）
     private String type;
     // 字段长度
     private Integer size;
