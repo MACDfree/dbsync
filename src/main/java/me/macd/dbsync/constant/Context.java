@@ -1,16 +1,19 @@
-package me.macd.dbsync;
+package me.macd.dbsync.constant;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.macd.dbsync.CompareTable;
+import me.macd.dbsync.Row;
 import me.macd.dbsync.domain.Column;
-import me.macd.dbsync.enumerate.DBType;
+import me.macd.dbsync.domain.DataBase;
 
-public class Context {
-    public static DBType leftDBType;
-    public static DBType rightDBType;
+public final class Context {
+    public static DataBase leftDataBase = new DataBase();
+    public static DataBase rightDataBase = new DataBase();
+
     // 只在源库中存在的表
     public static List<String> onlyLeftTables = new ArrayList<>();
     // 只在目标库中存在的表

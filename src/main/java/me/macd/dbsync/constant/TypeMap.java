@@ -1,9 +1,7 @@
-package me.macd.dbsync;
+package me.macd.dbsync.constant;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import me.macd.dbsync.enumerate.DBType;
 
 /**
  * 对于不同数据库的字段类型进行统一映射

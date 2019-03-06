@@ -1,4 +1,4 @@
-package me.macd.dbsync;
+package me.macd.dbsync.comparer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import me.macd.dbsync.CompareTable;
+import me.macd.dbsync.Row;
+import me.macd.dbsync.constant.Context;
 import me.macd.dbsync.diff.RowDiff;
 import me.macd.dbsync.diff.impl.DefaultRowDiff;
 

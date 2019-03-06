@@ -1,13 +1,11 @@
-package me.macd.dbsync;
+package me.macd.dbsync.comparer;
 
+import me.macd.dbsync.constant.Context;
 import me.macd.dbsync.diff.ColumnDiff;
 import me.macd.dbsync.diff.impl.DefaultColumnDiff;
 import me.macd.dbsync.domain.Column;
-import me.macd.dbsync.enumerate.DBType;
-import me.macd.dbsync.finder.TableFinderFactory;
+import me.macd.dbsync.loader.DataBaseLoader;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -41,24 +39,8 @@ public class TableStructComparer {
         // map<tablename, map<columnname,column>>
         Map<String, Map<String, Column>> desMap;
 
-        try (Connection leftConn = DriverManager.getConnection(leftUrl, leftUserName, leftPassword);
-             Connection rightConn = DriverManager.getConnection(rightUrl, rightUserName, rightPassword)) {
-            // 获取源库的数据库类型
-            String dbType = leftConn.getMetaData().getDatabaseProductName();
-            Context.leftDBType = dbType(dbType);
-
-            // 获取目标库的数据库类型
-            dbType = rightConn.getMetaData().getDatabaseProductName();
-            Context.rightDBType = dbType(dbType);
-
-            // 查找源库中的所有表字段
-            srcMap = TableFinderFactory.getTableFinder(Context.leftDBType).findTable(leftConn);
-
-            // 查找目标库中所有表字段
-            desMap = TableFinderFactory.getTableFinder(Context.rightDBType).findTable(rightConn);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        new DataBaseLoader(leftUrl, leftUserName, leftPassword).load(Context.leftDataBase);
+        new DataBaseLoader(rightUrl, rightUserName, rightPassword).load(Context.rightDataBase);
 
         // 进行表比对，利用集合操作，得出差集
         Set<String> result = new LinkedHashSet<>();
@@ -129,17 +111,6 @@ public class TableStructComparer {
                 }
             }
         }
-    }
-
-    private static DBType dbType(String dbType) {
-        if ("mysql".equalsIgnoreCase(dbType)) {
-            return DBType.mysql;
-        } else if ("microsoft sql server".equalsIgnoreCase(dbType)) {
-            return DBType.mssql;
-        } else if ("oracle".equalsIgnoreCase(dbType)) {
-            return DBType.oracle;
-        }
-        return DBType.mysql;
     }
 
     public String getLeftUrl() {

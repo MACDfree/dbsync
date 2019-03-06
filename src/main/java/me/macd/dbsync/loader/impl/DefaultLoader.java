@@ -1,44 +1,54 @@
-package me.macd.dbsync.finder.impl;
+package me.macd.dbsync.loader.impl;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import me.macd.dbsync.domain.Column;
-import me.macd.dbsync.finder.TableFinder;
+import me.macd.dbsync.domain.DataBase;
+import me.macd.dbsync.domain.Table;
+import me.macd.dbsync.loader.Loader;
 
-public class DefaultTableFinder implements TableFinder {
+public class DefaultLoader implements Loader {
 
     @Override
-    public Map<String, Map<String, Column>> findTable(Connection conn) throws SQLException {
-        Map<String, Map<String, Column>> map = new LinkedHashMap<>();
-
+    public void loadTableStruct(Connection conn, DataBase dataBase) throws SQLException {
         DatabaseMetaData metaData = conn.getMetaData();
 
         try (ResultSet tableResultSet = metaData.getTables(null, "%", "%", new String[] { "TABLE" })) {
             while (tableResultSet.next()) {
                 String tableName = tableResultSet.getString("TABLE_NAME");
+                Table table = new Table(tableName);
                 try (ResultSet columnResultSet = metaData.getColumns(null, "%", tableName, "%")) {
-                    Map<String, Column> colums = new LinkedHashMap<>();
                     while (columnResultSet.next()) {
                         String columnName = columnResultSet.getString("COLUMN_NAME");
                         String typeName = columnResultSet.getString("TYPE_NAME").toLowerCase();
                         Integer columnSize = columnResultSet.getInt("COLUMN_SIZE");
                         Integer digits = columnResultSet.getInt("DECIMAL_DIGITS");
                         Column column = new Column(tableName, columnName, typeName, columnSize, digits);
-                        colums.put(columnName.toLowerCase(), column);
+                        table.addColumn(column);
                     }
-                    map.put(tableName.toLowerCase(), colums);
+                    dataBase.addTable(table);
                 } catch (SQLException e) {
                     throw e;
                 }
             }
         }
-
-        return map;
     }
 
+    @Override
+    public void loadView(Connection conn, DataBase dataBase) throws SQLException {
+
+    }
+
+    @Override
+    public void loadIndex(Connection conn, DataBase dataBase) throws SQLException {
+
+    }
+
+    @Override
+    public void loadFunction(Connection conn, DataBase dataBase) throws SQLException {
+
+    }
 }

@@ -1,5 +1,7 @@
 package me.macd.dbsync;
 
+import me.macd.dbsync.comparer.TableStructComparer;
+import me.macd.dbsync.constant.Context;
 import me.macd.dbsync.domain.Column;
 
 public class App {

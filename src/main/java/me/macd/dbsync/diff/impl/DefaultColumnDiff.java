@@ -1,16 +1,16 @@
 package me.macd.dbsync.diff.impl;
 
 import me.macd.dbsync.domain.Column;
-import me.macd.dbsync.Context;
-import me.macd.dbsync.TypeMap;
+import me.macd.dbsync.constant.Context;
+import me.macd.dbsync.constant.TypeMap;
 import me.macd.dbsync.diff.ColumnDiff;
 
 public class DefaultColumnDiff implements ColumnDiff {
 
     @Override
     public boolean diff(Column c1, Column c2) {
-        String srcType = TypeMap.typeMap.get(Context.leftDBType).get(c1.getType());
-        String desType = TypeMap.typeMap.get(Context.rightDBType).get(c2.getType());
+        String srcType = TypeMap.typeMap.get(Context.leftDataBase.getDbType()).get(c1.getType());
+        String desType = TypeMap.typeMap.get(Context.rightDataBase.getDbType()).get(c2.getType());
 
         if (srcType == null || desType == null) {
             return false;

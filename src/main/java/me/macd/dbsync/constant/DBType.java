@@ -1,4 +1,4 @@
-package me.macd.dbsync.enumerate;
+package me.macd.dbsync.constant;
 
 public enum DBType {
     mysql("mysql"), oracle("oracle"), mssql("mssql");
