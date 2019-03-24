@@ -11,18 +11,16 @@ public class App {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        TableStructComparer.compare("jdbc:mysql://192.168.211.68:3306/epointbid_zb_qy", "root", "123456",
-                "jdbc:mysql://localhost:3307/bstool_zs", "root", "11111");
+        TableStructComparer.Builder builder = new TableStructComparer.Builder();
+        builder.left("jdbc:mysql://192.168.211.68:3306/epointbid_zb_qy", "root", "123456")
+                .right("jdbc:mysql://localhost:3307/bstool_zs", "root", "11111").build()
+                .compare();
         
 //        RowCompare.compare("jdbc:mysql://192.168.211.68:3306/epointbid_zb_qy", "root", "123456",
 //                "jdbc:mysql://localhost:3307/bstool_zs", "root", "11111");

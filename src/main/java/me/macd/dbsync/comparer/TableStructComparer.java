@@ -4,6 +4,7 @@ import me.macd.dbsync.constant.Context;
 import me.macd.dbsync.diff.ColumnDiff;
 import me.macd.dbsync.diff.impl.DefaultColumnDiff;
 import me.macd.dbsync.domain.Column;
+import me.macd.dbsync.domain.Table;
 import me.macd.dbsync.loader.DataBaseLoader;
 
 import java.util.ArrayList;
@@ -31,57 +32,57 @@ public class TableStructComparer {
     }
 
     public void compare() {
-        // 使用map存储表相关信息，包括表名和此表中的字段信息
-        // 源库中的表
-        // map<tablename, map<columnname,column>>
-        Map<String, Map<String, Column>> srcMap;
-        // 目标库中的表
-        // map<tablename, map<columnname,column>>
-        Map<String, Map<String, Column>> desMap;
-
         new DataBaseLoader(leftUrl, leftUserName, leftPassword).load(Context.leftDataBase);
         new DataBaseLoader(rightUrl, rightUserName, rightPassword).load(Context.rightDataBase);
+
+        // 使用map存储表相关信息，包括表名和此表中的字段信息
+        // 源库中的表
+        // map<tablename, table>
+        Map<String, Table> leftTableMap = Context.leftDataBase.getTables();
+        // 目标库中的表
+        // map<tablename, table>
+        Map<String, Table> rightTableMap = Context.rightDataBase.getTables();
 
         // 进行表比对，利用集合操作，得出差集
         Set<String> result = new LinkedHashSet<>();
         // 获取只在源库中存在的表
         result.clear();
-        result.addAll(srcMap.keySet());
-        result.removeAll(desMap.keySet());
-        System.out.println("只在源库中存在表个数：" + result.size());
+        result.addAll(leftTableMap.keySet());
+        result.removeAll(rightTableMap.keySet());
+        System.out.println("只在左库中存在表个数：" + result.size());
         for (String key : result) {
             Context.onlyLeftTables.add(key);
-            System.out.println("只在源库中存在：" + key);
+            System.out.println("只在左库中存在：" + key);
         }
         System.out.println("------------------------------------------------------");
         // 获取只在目标库中存在的表
         result.clear();
-        result.addAll(desMap.keySet());
-        result.removeAll(srcMap.keySet());
-        System.out.println("只在目标库中存在表个数：" + result.size());
+        result.addAll(rightTableMap.keySet());
+        result.removeAll(leftTableMap.keySet());
+        System.out.println("只在右库中存在表个数：" + result.size());
         for (String key : result) {
             Context.onlyRightTables.add(key);
-            System.out.println("只在目标库中存在：" + key);
+            System.out.println("只在右库中存在：" + key);
         }
 
         result.clear();
         Set<String> srcColumSet;
         Set<String> desColumSet;
         ColumnDiff compare = new DefaultColumnDiff();
-        for (String tableName : srcMap.keySet()) {
-            if (desMap.containsKey(tableName)) {
+        for (String tableName : leftTableMap.keySet()) {
+            if (rightTableMap.containsKey(tableName)) {
                 // 只有源库和目标库都存在的表的情况下才进行比较
-                srcColumSet = srcMap.get(tableName).keySet();
-                desColumSet = desMap.get(tableName).keySet();
+                srcColumSet = leftTableMap.get(tableName).getColumns().keySet();
+                desColumSet = rightTableMap.get(tableName).getColumns().keySet();
 
                 // 只在源库中存在的字段
                 result.clear();
                 result.addAll(srcColumSet);
                 result.removeAll(desColumSet);
                 for (String key : result) {
-                    System.out.println("只在源库中存在的字段");
+                    System.out.println("只在左库中存在的字段");
                     System.out.println("表名：" + tableName + ", 字段名：" + key);
-                    Context.onlyLeftColums.add(srcMap.get(tableName).get(key));
+                    Context.onlyLeftColums.add(leftTableMap.get(tableName).getColumns().get(key));
                 }
 
                 // 只在目标库中存在的字段
@@ -89,16 +90,16 @@ public class TableStructComparer {
                 result.addAll(desColumSet);
                 result.removeAll(srcColumSet);
                 for (String key : result) {
-                    System.out.println("只在目标库中存在的字段");
+                    System.out.println("只在右库中存在的字段");
                     System.out.println("表名：" + tableName + ", 字段名：" + key);
-                    Context.onlyRightColums.add(desMap.get(tableName).get(key));
+                    Context.onlyRightColums.add(rightTableMap.get(tableName).getColumns().get(key));
                 }
 
                 for (String key : srcColumSet) {
                     if (desColumSet.contains(key)) {
-                        // 只有源库和目标库都存在的字段的情况下才进行比较
-                        Column src = srcMap.get(tableName).get(key);
-                        Column des = desMap.get(tableName).get(key);
+                        // 只有左库和右库都存在的字段的情况下才进行比较
+                        Column src = leftTableMap.get(tableName).getColumns().get(key);
+                        Column des = rightTableMap.get(tableName).getColumns().get(key);
 
                         if (compare.diff(src, des)) {
                             Column[] cols = new Column[]{src, des};
